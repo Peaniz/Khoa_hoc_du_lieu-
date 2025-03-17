@@ -1,0 +1,296 @@
+# Chương 7: Học máy cơ bản
+
+## 1. Giới thiệu về học máy
+
+### 1.1 Khái niệm cơ bản
+- Học máy là gì:
+  + Là một nhánh của trí tuệ nhân tạo
+  + Tập trung vào việc xây dựng các hệ thống có thể học từ dữ liệu
+  + Cải thiện hiệu suất theo thời gian
+- Các loại học máy:
+  + Học có giám sát (Supervised Learning)
+  + Học không giám sát (Unsupervised Learning)
+  + Học tăng cường (Reinforcement Learning)
+
+### 1.2 Quy trình học máy
+- Thu thập dữ liệu
+- Tiền xử lý dữ liệu
+- Chọn mô hình
+- Huấn luyện mô hình
+- Đánh giá mô hình
+- Tối ưu hóa mô hình
+- Triển khai mô hình
+
+## 2. Các mô hình học máy cơ bản
+
+### 2.1 Hồi quy tuyến tính
+- Khái niệm:
+  + Mô hình hồi quy đơn giản nhất
+  + Giả định mối quan hệ tuyến tính giữa biến đầu vào và đầu ra
+- Công thức:
+  + y = mx + b (hồi quy đơn biến)
+  + y = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ (hồi quy đa biến)
+- Ưu điểm:
+  + Dễ hiểu và diễn giải
+  + Tính toán nhanh
+  + Phù hợp với dữ liệu có mối quan hệ tuyến tính
+- Nhược điểm:
+  + Không xử lý được mối quan hệ phi tuyến
+  + Nhạy cảm với outliers
+  + Giả định dữ liệu độc lập
+
+### 2.2 Hồi quy logistic
+- Khái niệm:
+  + Mô hình phân loại cho biến phụ thuộc nhị phân
+  + Sử dụng hàm sigmoid để chuyển đổi đầu ra
+- Công thức:
+  + P(y=1|x) = 1/(1 + e^(-z))
+  + z = β₀ + β₁x₁ + β₂x₂ + ... + βₙxₙ
+- Ứng dụng:
+  + Phân loại nhị phân
+  + Dự đoán xác suất
+  + Phân tích hồi quy
+
+### 2.3 Cây quyết định
+- Khái niệm:
+  + Mô hình phân loại dựa trên cấu trúc cây
+  + Chia dữ liệu thành các nhóm dựa trên các điều kiện
+- Cấu trúc:
+  + Nút gốc (Root node)
+  + Nút trong (Internal nodes)
+  + Nút lá (Leaf nodes)
+- Ưu điểm:
+  + Dễ hiểu và diễn giải
+  + Xử lý được dữ liệu phi tuyến
+  + Không cần chuẩn hóa dữ liệu
+- Nhược điểm:
+  + Dễ bị overfitting
+  + Nhạy cảm với dữ liệu nhiễu
+  + Có thể tạo cây quá phức tạp
+
+### 2.4 Random Forest
+- Khái niệm:
+  + Ensemble method kết hợp nhiều cây quyết định
+  + Sử dụng bootstrap sampling và feature selection
+- Cách hoạt động:
+  + Tạo nhiều cây quyết định
+  + Mỗi cây được huấn luyện trên tập dữ liệu khác nhau
+  + Kết hợp kết quả từ các cây
+- Ưu điểm:
+  + Giảm overfitting
+  + Xử lý được dữ liệu nhiễu
+  + Đánh giá được feature importance
+- Nhược điểm:
+  + Tính toán phức tạp
+  + Khó diễn giải
+  + Cần nhiều bộ nhớ
+
+### 2.5 K-Nearest Neighbors (KNN)
+- Khái niệm:
+  + Mô hình phân loại dựa trên khoảng cách
+  + Phân loại dựa trên k điểm gần nhất
+- Cách hoạt động:
+  + Tính khoảng cách giữa điểm cần phân loại và các điểm trong tập huấn luyện
+  + Chọn k điểm gần nhất
+  + Phân loại dựa trên đa số của k điểm
+- Ưu điểm:
+  + Đơn giản và dễ hiểu
+  + Không cần huấn luyện
+  + Xử lý được dữ liệu phi tuyến
+- Nhược điểm:
+  + Tính toán chậm với dữ liệu lớn
+  + Nhạy cảm với kích thước dữ liệu
+  + Cần chuẩn hóa dữ liệu
+
+### 2.6 Support Vector Machine (SVM)
+- Khái niệm:
+  + Mô hình phân loại tìm siêu phẳng tối ưu
+  + Sử dụng kernel trick để xử lý dữ liệu phi tuyến
+- Cách hoạt động:
+  + Tìm siêu phẳng phân tách các lớp
+  + Tối đa hóa margin giữa các lớp
+  + Sử dụng kernel function để chuyển đổi không gian
+- Ưu điểm:
+  + Hiệu quả trong không gian nhiều chiều
+  + Xử lý được dữ liệu phi tuyến
+  + Khả năng tổng quát hóa tốt
+- Nhược điểm:
+  + Tính toán phức tạp
+  + Khó chọn kernel function
+  + Nhạy cảm với tham số
+
+### 2.7 Naive Bayes
+- Khái niệm:
+  + Mô hình phân loại dựa trên định lý Bayes
+  + Giả định các features độc lập
+- Công thức:
+  + P(y|x) ∝ P(y)∏P(xi|y)
+  + P(y): prior probability
+  + P(xi|y): likelihood
+- Ưu điểm:
+  + Tính toán nhanh
+  + Xử lý được dữ liệu nhiều chiều
+  + Phù hợp với dữ liệu lớn
+- Nhược điểm:
+  + Giả định features độc lập
+  + Không xử lý được mối quan hệ phức tạp
+  + Hiệu suất phụ thuộc vào chất lượng dữ liệu
+
+## 3. Đánh giá mô hình
+
+### 3.1 Các metrics đánh giá
+- Accuracy:
+  + Tỷ lệ dự đoán đúng
+  + Không phù hợp với dữ liệu mất cân bằng
+- Precision:
+  + Tỷ lệ dự đoán dương tính thực sự
+  + Đánh giá độ chính xác của dự đoán dương
+- Recall:
+  + Tỷ lệ dự đoán đúng trong số các trường hợp dương thực
+  + Đánh giá khả năng phát hiện trường hợp dương
+- F1-score:
+  + Trung bình điều hòa của precision và recall
+  + Cân bằng giữa precision và recall
+
+### 3.2 Cross-validation
+- Khái niệm:
+  + Kỹ thuật đánh giá mô hình
+  + Chia dữ liệu thành k phần bằng nhau
+- Cách thực hiện:
+  + Chia dữ liệu thành k folds
+  + Huấn luyện trên k-1 folds
+  + Đánh giá trên fold còn lại
+  + Lặp lại k lần
+- Ưu điểm:
+  + Đánh giá khách quan
+  + Giảm overfitting
+  + Sử dụng hiệu quả dữ liệu
+
+### 3.3 Feature Importance
+- Khái niệm:
+  + Đánh giá tầm quan trọng của các features
+  + Giúp chọn features quan trọng
+- Phương pháp:
+  + Random Forest feature importance
+  + Correlation analysis
+  + Information gain
+- Ứng dụng:
+  + Feature selection
+  + Dimensionality reduction
+  + Model interpretation
+
+## 4. Code Implementation
+
+### 4.1 Chuẩn bị dữ liệu
+```python
+def load_and_prepare_data():
+    # Đọc dữ liệu
+    df = pd.read_csv('iris.csv')
+    
+    # Chuẩn bị features và target
+    X = df.drop('species', axis=1)
+    y = df['species']
+    
+    # Mã hóa target
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+    
+    # Chia tập train và test
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+    # Chuẩn hóa features
+    scaler = StandardScaler()
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+    
+    return X_train_scaled, X_test_scaled, y_train, y_test, X, y
+```
+
+### 4.2 Huấn luyện và đánh giá mô hình
+```python
+def train_and_evaluate_classifiers(X_train, X_test, y_train, y_test):
+    # Danh sách các mô hình phân loại
+    classifiers = {
+        'Logistic Regression': LogisticRegression(),
+        'Decision Tree': DecisionTreeClassifier(),
+        'Random Forest': RandomForestClassifier(),
+        'KNN': KNeighborsClassifier(),
+        'SVM': SVC(),
+        'Naive Bayes': GaussianNB(),
+        'XGBoost': xgb.XGBClassifier()
+    }
+    
+    results = {}
+    
+    for name, clf in classifiers.items():
+        # Huấn luyện mô hình
+        clf.fit(X_train, y_train)
+        
+        # Dự đoán
+        y_pred = clf.predict(X_test)
+        
+        # Tính các metrics
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, average='weighted')
+        recall = recall_score(y_test, y_pred, average='weighted')
+        f1 = f1_score(y_test, y_pred, average='weighted')
+        
+        results[name] = {
+            'Accuracy': accuracy,
+            'Precision': precision,
+            'Recall': recall,
+            'F1-score': f1
+        }
+    
+    return results
+```
+
+### 4.3 Cross-validation
+```python
+def cross_validation_analysis(X, y):
+    # Danh sách các mô hình
+    models = {
+        'Logistic Regression': LogisticRegression(),
+        'Decision Tree': DecisionTreeClassifier(),
+        'Random Forest': RandomForestClassifier(),
+        'KNN': KNeighborsClassifier(),
+        'SVM': SVC(),
+        'Naive Bayes': GaussianNB(),
+        'XGBoost': xgb.XGBClassifier()
+    }
+    
+    cv_results = {}
+    
+    for name, model in models.items():
+        # Thực hiện cross-validation
+        scores = cross_val_score(model, X, y, cv=5)
+        
+        cv_results[name] = {
+            'Mean CV Score': scores.mean(),
+            'Std CV Score': scores.std()
+        }
+    
+    return cv_results
+```
+
+### 4.4 Feature Importance
+```python
+def feature_importance_analysis(X, y):
+    # Huấn luyện Random Forest
+    rf = RandomForestClassifier()
+    rf.fit(X, y)
+    
+    # Lấy feature importance
+    importance = rf.feature_importances_
+    
+    # Vẽ biểu đồ feature importance
+    plt.figure(figsize=(10, 6))
+    plt.bar(range(len(importance)), importance)
+    plt.xlabel('Features')
+    plt.ylabel('Importance')
+    plt.title('Feature Importance - Random Forest')
+    plt.savefig('feature_importance.png')
+    plt.close()
+    
+    return importance
+``` 

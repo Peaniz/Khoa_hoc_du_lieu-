@@ -1,0 +1,278 @@
+# Chương 4: Các thao tác nhập/xuất dữ liệu
+
+## 1. Đọc và ghi file
+
+### 1.1 Đọc file CSV
+- Sử dụng pandas:
+  + pd.read_csv(): Đọc file CSV
+  + Các tham số quan trọng:
+    * sep: Dấu phân cách
+    * header: Hàng tiêu đề
+    * index_col: Cột làm index
+    * na_values: Giá trị NA
+- Xử lý dữ liệu thiếu:
+  + dropna(): Xóa hàng có giá trị NA
+  + fillna(): Điền giá trị thay thế
+  + interpolate(): Nội suy giá trị
+
+### 1.2 Đọc file Excel
+- Sử dụng pandas:
+  + pd.read_excel(): Đọc file Excel
+  + Các tham số:
+    * sheet_name: Tên sheet
+    * usecols: Cột cần đọc
+    * skiprows: Bỏ qua hàng
+- Xử lý nhiều sheet:
+  + Đọc tất cả sheet
+  + Chọn sheet cụ thể
+  + Kết hợp dữ liệu
+
+### 1.3 Đọc file JSON
+- Sử dụng pandas:
+  + pd.read_json(): Đọc file JSON
+  + Các tham số:
+    * orient: Hướng dữ liệu
+    * typ: Kiểu dữ liệu
+    * lines: Đọc từng dòng
+- Xử lý JSON phức tạp:
+  + JSON lồng nhau
+  + JSON mảng
+  + JSON với schema
+
+### 1.4 Ghi file
+- Ghi CSV:
+  + to_csv(): Ghi file CSV
+  + Các tham số:
+    * index: Ghi index
+    * sep: Dấu phân cách
+    * encoding: Mã hóa
+- Ghi Excel:
+  + to_excel(): Ghi file Excel
+  + Các tham số:
+    * sheet_name: Tên sheet
+    * index: Ghi index
+- Ghi JSON:
+  + to_json(): Ghi file JSON
+  + Các tham số:
+    * orient: Hướng dữ liệu
+    * date_format: Định dạng ngày
+
+## 2. Web Scraping
+
+### 2.1 Cơ bản về web scraping
+- Các thư viện:
+  + requests: Gửi HTTP request
+  + BeautifulSoup: Phân tích HTML
+  + Selenium: Tương tác với trang web
+- Các bước thực hiện:
+  + Gửi request
+  + Phân tích HTML
+  + Trích xuất dữ liệu
+  + Lưu dữ liệu
+
+### 2.2 Phân tích HTML
+- BeautifulSoup:
+  + find(): Tìm phần tử đầu tiên
+  + find_all(): Tìm tất cả phần tử
+  + select(): Chọn theo CSS selector
+- Xử lý dữ liệu:
+  + Trích xuất text
+  + Trích xuất attributes
+  + Xử lý nested elements
+
+### 2.3 Xử lý động
+- Selenium:
+  + WebDriver: Điều khiển trình duyệt
+  + wait: Đợi phần tử
+  + JavaScript execution
+- Các thao tác:
+  + Click
+  + Input text
+  + Scroll
+  + Screenshot
+
+## 3. Tương tác với API
+
+### 3.1 REST API
+- Các phương thức HTTP:
+  + GET: Lấy dữ liệu
+  + POST: Tạo dữ liệu
+  + PUT: Cập nhật dữ liệu
+  + DELETE: Xóa dữ liệu
+- Xử lý response:
+  + Status code
+  + Headers
+  + Body
+
+### 3.2 Authentication
+- Các phương thức:
+  + API key
+  + OAuth
+  + Basic auth
+- Xử lý token:
+  + Lưu token
+  + Refresh token
+  + Error handling
+
+### 3.3 Rate Limiting
+- Xử lý giới hạn:
+  + Delay giữa requests
+  + Retry mechanism
+  + Error handling
+- Best practices:
+  + Caching
+  + Batch requests
+  + Async requests
+
+## 4. Tương tác với Database
+
+### 4.1 SQL Database
+- Kết nối:
+  + sqlite3
+  + mysql-connector
+  + psycopg2
+- Các thao tác:
+  + SELECT
+  + INSERT
+  + UPDATE
+  + DELETE
+
+### 4.2 NoSQL Database
+- MongoDB:
+  + pymongo
+  + CRUD operations
+- Redis:
+  + redis-py
+  + Key-value operations
+
+### 4.3 ORM
+- SQLAlchemy:
+  + Models
+  + Sessions
+  + Queries
+- Best practices:
+  + Connection pooling
+  + Transaction management
+  + Error handling
+
+## 5. Code Implementation
+
+### 5.1 Đọc và ghi file
+```python
+def read_write_files():
+    # Đọc file CSV
+    df = pd.read_csv('iris.csv')
+    
+    # Phân tích dữ liệu
+    print("Thống kê mô tả:")
+    print(df.describe())
+    
+    # Vẽ biểu đồ phân phối
+    plt.figure(figsize=(10, 6))
+    sns.histplot(data=df, x='sepal_length')
+    plt.title('Phân phối sepal length')
+    plt.savefig('sepal_length_dist.png')
+    plt.close()
+    
+    # Tính correlation
+    correlation = df.corr()
+    
+    # Tính confidence interval
+    ci = stats.t.interval(0.95, len(df)-1, loc=df['sepal_length'].mean(), 
+                         scale=stats.sem(df['sepal_length']))
+    
+    # Lưu kết quả
+    results = {
+        'correlation': correlation,
+        'confidence_interval': ci
+    }
+    
+    # Ghi file CSV
+    df.to_csv('processed_iris.csv', index=False)
+    
+    # Ghi file JSON
+    with open('results.json', 'w') as f:
+        json.dump(results, f)
+```
+
+### 5.2 Web Scraping
+```python
+def web_scraping():
+    # Gửi request
+    url = 'https://en.wikipedia.org/wiki/List_of_largest_companies_by_revenue'
+    response = requests.get(url)
+    
+    # Phân tích HTML
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Tìm bảng
+    table = soup.find('table', {'class': 'wikitable'})
+    
+    # Trích xuất dữ liệu
+    data = []
+    for row in table.find_all('tr')[1:]:
+        cols = row.find_all('td')
+        if len(cols) >= 3:
+            data.append({
+                'rank': cols[0].text.strip(),
+                'name': cols[1].text.strip(),
+                'revenue': cols[2].text.strip()
+            })
+    
+    # Chuyển thành DataFrame
+    df = pd.DataFrame(data)
+    
+    # Lưu file
+    df.to_csv('largest_companies.csv', index=False)
+```
+
+### 5.3 API Interaction
+```python
+def api_interaction():
+    # API endpoint
+    url = 'https://api.example.com/data'
+    
+    # Headers
+    headers = {
+        'Authorization': 'Bearer your_token',
+        'Content-Type': 'application/json'
+    }
+    
+    # Gửi request
+    response = requests.get(url, headers=headers)
+    
+    # Kiểm tra status code
+    if response.status_code == 200:
+        # Chuyển JSON thành DataFrame
+        data = response.json()
+        df = pd.DataFrame(data)
+        
+        # Lưu file
+        df.to_csv('api_data.csv', index=False)
+    else:
+        print(f"Error: {response.status_code}")
+```
+
+### 5.4 Database Operations
+```python
+def database_operations():
+    # Kết nối database
+    conn = sqlite3.connect('example.db')
+    
+    # Đọc dữ liệu từ CSV
+    df = pd.read_csv('iris.csv')
+    
+    # Ghi vào database
+    df.to_sql('iris', conn, if_exists='replace', index=False)
+    
+    # Thực hiện query
+    query = "SELECT * FROM iris WHERE species = 'setosa'"
+    result = pd.read_sql_query(query, conn)
+    
+    # In kết quả
+    print("Setosa flowers:")
+    print(result)
+    
+    # Đóng kết nối
+    conn.close()
+``` 

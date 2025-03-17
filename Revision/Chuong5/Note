@@ -1,0 +1,190 @@
+# Chương 5: Tiền xử lý dữ liệu
+
+## 1. Xử lý dữ liệu thiếu
+
+### 1.1 Phát hiện dữ liệu thiếu
+- Các loại giá trị thiếu:
+  + NaN (Not a Number)
+  + None
+  + Null
+  + Empty string
+- Phương pháp phát hiện:
+  + isna(): Kiểm tra giá trị NA
+  + isnull(): Kiểm tra giá trị null
+  + notna(): Kiểm tra giá trị không NA
+
+### 1.2 Xử lý dữ liệu thiếu
+- Xóa dữ liệu:
+  + dropna(): Xóa hàng/cột có giá trị NA
+  + Các tham số:
+    * how: Cách xóa (any/all)
+    * axis: Trục xóa (0/1)
+    * thresh: Ngưỡng giá trị NA
+- Điền giá trị:
+  + fillna(): Điền giá trị thay thế
+  + Các phương pháp:
+    * Giá trị cố định
+    * Trung bình/Trung vị
+    * Mode
+    * Nội suy
+
+## 2. Xử lý dữ liệu ngoại lai
+
+### 2.1 Phát hiện outliers
+- Phương pháp thống kê:
+  + Z-score
+  + IQR (Interquartile Range)
+  + Modified Z-score
+- Phương pháp trực quan:
+  + Boxplot
+  + Scatter plot
+  + Histogram
+
+### 2.2 Xử lý outliers
+- Xóa outliers:
+  + Dựa trên ngưỡng
+  + Dựa trên phân phối
+- Thay thế outliers:
+  + Giá trị trung bình
+  + Giá trị trung vị
+  + Giá trị cắt
+
+## 3. Chuẩn hóa dữ liệu
+
+### 3.1 Chuẩn hóa Z-score
+- Công thức:
+  + z = (x - μ) / σ
+  + μ: Trung bình
+  + σ: Độ lệch chuẩn
+- Đặc điểm:
+  + Trung bình = 0
+  + Độ lệch chuẩn = 1
+- Ứng dụng:
+  + So sánh các biến
+  + Phân tích thống kê
+
+### 3.2 Chuẩn hóa Min-Max
+- Công thức:
+  + x' = (x - min) / (max - min)
+- Đặc điểm:
+  + Giá trị trong khoảng [0,1]
+  + Giữ nguyên phân phối
+- Ứng dụng:
+  + Neural networks
+  + K-means clustering
+
+### 3.3 Chuẩn hóa Robust
+- Công thức:
+  + x' = (x - median) / IQR
+- Đặc điểm:
+  + Không bị ảnh hưởng bởi outliers
+  + Phù hợp với dữ liệu có outliers
+- Ứng dụng:
+  + Dữ liệu có outliers
+  + Phân tích thống kê
+
+## 4. Biến đổi dữ liệu
+
+### 4.1 Biến đổi log
+- Công thức:
+  + log(x) hoặc ln(x)
+- Đặc điểm:
+  + Giảm độ lệch
+  + Chuẩn hóa phân phối
+- Ứng dụng:
+  + Dữ liệu có độ lệch cao
+  + Phân tích tài chính
+
+### 4.2 Biến đổi Box-Cox
+- Công thức:
+  + y(λ) = (y^λ - 1)/λ
+- Đặc điểm:
+  + Tự động tìm λ tối ưu
+  + Chuẩn hóa phân phối
+- Ứng dụng:
+  + Dữ liệu có độ lệch
+  + Phân tích thống kê
+
+### 4.3 Biến đổi đa thức
+- Công thức:
+  + x², x³, ...
+- Đặc điểm:
+  + Tạo features mới
+  + Bắt mối quan hệ phi tuyến
+- Ứng dụng:
+  + Hồi quy phi tuyến
+  + Feature engineering
+
+## 5. Code Implementation
+
+### 5.1 Xử lý dữ liệu thiếu
+```python
+def handle_missing_data(df):
+    # Phát hiện dữ liệu thiếu
+    missing = df.isna().sum()
+    print("Số lượng giá trị thiếu:")
+    print(missing)
+    
+    # Xóa dữ liệu thiếu
+    df_cleaned = df.dropna()
+    
+    # Điền giá trị thiếu
+    df_filled = df.fillna(df.mean())
+    
+    return df_cleaned, df_filled
+```
+
+### 5.2 Xử lý outliers
+```python
+def handle_outliers(df):
+    # Tính Z-score
+    z_scores = stats.zscore(df)
+    
+    # Phát hiện outliers
+    outliers = (abs(z_scores) > 3).sum()
+    print("Số lượng outliers:")
+    print(outliers)
+    
+    # Xóa outliers
+    df_cleaned = df[(abs(z_scores) < 3).all(axis=1)]
+    
+    # Thay thế outliers
+    df_replaced = df.copy()
+    df_replaced[abs(z_scores) > 3] = df_replaced.mean()
+    
+    return df_cleaned, df_replaced
+```
+
+### 5.3 Chuẩn hóa dữ liệu
+```python
+def normalize_data(df):
+    # Chuẩn hóa Z-score
+    scaler = StandardScaler()
+    z_score_scaled = scaler.fit_transform(df)
+    
+    # Chuẩn hóa Min-Max
+    min_max_scaler = MinMaxScaler()
+    min_max_scaled = min_max_scaler.fit_transform(df)
+    
+    # Chuẩn hóa Robust
+    robust_scaler = RobustScaler()
+    robust_scaled = robust_scaler.fit_transform(df)
+    
+    return z_score_scaled, min_max_scaled, robust_scaled
+```
+
+### 5.4 Biến đổi dữ liệu
+```python
+def transform_data(df):
+    # Biến đổi log
+    log_transformed = np.log1p(df)
+    
+    # Biến đổi Box-Cox
+    box_cox_transformed = stats.boxcox(df)
+    
+    # Biến đổi đa thức
+    poly_features = PolynomialFeatures(degree=2)
+    poly_transformed = poly_features.fit_transform(df)
+    
+    return log_transformed, box_cox_transformed, poly_transformed
+``` 
